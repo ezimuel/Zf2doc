@@ -4,7 +4,7 @@ Zend\\XmlRpc\\Server
 Introduction
 ------------
 
- ``Zend\XmlRpc\Server`` is intended as a fully-featured *XML-RPC* server, following .. _the specifications outlined at www.xmlrpc.com: http://www.xmlrpc.com/spec. Additionally, it implements the ``system.multicall()`` method, allowing boxcarring of requests.
+``Zend\XmlRpc\Server`` is intended as a fully-featured *XML-RPC* server, following `the specifications outlined at www.xmlrpc.com`_ . Additionally, it implements the ``system.multicall()`` method, allowing boxcarring of requests.
 
 Basic Usage
 -----------
@@ -22,13 +22,13 @@ An example of the most basic use case:
 Server Structure
 ----------------
 
- ``Zend\XmlRpc\Server`` is composed of a variety of components, ranging from the server itself to request, response, and fault objects.
+``Zend\XmlRpc\Server`` is composed of a variety of components, ranging from the server itself to request, response, and fault objects.
 
 To bootstrap ``Zend\XmlRpc\Server`` , the developer must attach one or more classes or functions to the server, via the ``setClass()`` and ``addFunction()`` methods.
 
 Once done, you may either pass a ``Zend\XmlRpc\Request`` object to ``Zend\XmlRpc\Server::handle()`` , or it will instantiate a ``Zend\XmlRpc\Request\Http`` object if none is provided -- thus grabbing the request fromphp://input.
 
- ``Zend\XmlRpc\Server::handle()`` then attempts to dispatch to the appropriate handler based on the method requested. It then returns either a ``Zend\XmlRpc\Response`` -based object or a ``Zend\XmlRpc\Server\Fault`` object. These objects both have ``__toString()`` methods that create valid *XML-RPC*  *XML* responses, allowing them to be directly echoed.
+``Zend\XmlRpc\Server::handle()`` then attempts to dispatch to the appropriate handler based on the method requested. It then returns either a ``Zend\XmlRpc\Response`` -based object or a ``Zend\XmlRpc\Server\Fault`` object. These objects both have ``__toString()`` methods that create valid *XML-RPC*  *XML* responses, allowing them to be directly echoed.
 
 Anatomy of a webservice
 -----------------------
@@ -36,21 +36,21 @@ Anatomy of a webservice
 General considerations
 ----------------------
 
-For maximum performance it is recommended to use a simple bootstrap file for the server component. Using ``Zend\XmlRpc\Server`` inside a .. _Zend\Controller: is strongly discouraged to avoid the overhead.
+For maximum performance it is recommended to use a simple bootstrap file for the server component. Using ``Zend\XmlRpc\Server`` inside a `Zend\Controller`_ is strongly discouraged to avoid the overhead.
 
 Services change over time and while webservices are generally less change intense as code-native *APIs* , it is recommended to version your service. Do so to lay grounds to provide compatibility for clients using older versions of your service and manage your service lifecycle including deprecation timeframes.To do so just include a version number into your *URI* . It is also recommended to include the remote protocol name in the *URI* to allow easy integration of upcoming remoting technologies. http://myservice.ws/1.0/XMLRPC/.
 
 What to expose?
 ---------------
 
-Most of the time it is not sensible to expose business objects directly. Business objects are usually small and under heavy change, because change is cheap in this layer of your application. Once deployed and adopted, web services are hard to change. Another concern is *I/O* and latency: the best webservice calls are those not happening. Therefore service calls need to be more coarse-grained than usual business logic is. Often an additional layer in front of your business objects makes sense. This layer is sometimes referred to as .. _Remote Facade: http://martinfowler.com/eaaCatalog/remoteFacade.html. Such a service layer adds a coarse grained interface on top of your business logic and groups verbose operations into smaller ones.
+Most of the time it is not sensible to expose business objects directly. Business objects are usually small and under heavy change, because change is cheap in this layer of your application. Once deployed and adopted, web services are hard to change. Another concern is *I/O* and latency: the best webservice calls are those not happening. Therefore service calls need to be more coarse-grained than usual business logic is. Often an additional layer in front of your business objects makes sense. This layer is sometimes referred to as `Remote Facade`_ . Such a service layer adds a coarse grained interface on top of your business logic and groups verbose operations into smaller ones.
 
 Conventions
 -----------
 
- ``Zend\XmlRpc\Server`` allows the developer to attach functions and class method calls as dispatchable *XML-RPC* methods. Via ``Zend\Server\Reflection`` , it does introspection on all attached methods, using the function and method docblocks to determine the method help text and method signatures.
+``Zend\XmlRpc\Server`` allows the developer to attach functions and class method calls as dispatchable *XML-RPC* methods. Via ``Zend\Server\Reflection`` , it does introspection on all attached methods, using the function and method docblocks to determine the method help text and method signatures.
 
- *XML-RPC* types do not necessarily map one-to-one to *PHP* types. However, the code will do its best to guess the appropriate type based on the values listed in @param and @return lines. Some *XML-RPC* types have no immediate *PHP* equivalent, however, and should be hinted using the *XML-RPC* type in the PHPDoc. These include:
+*XML-RPC* types do not necessarily map one-to-one to *PHP* types. However, the code will do its best to guess the appropriate type based on the values listed in @param and @return lines. Some *XML-RPC* types have no immediate *PHP* equivalent, however, and should be hinted using the *XML-RPC* type in the PHPDoc. These include:
 
     - dateTime.iso8601, a string formatted
     - as 'YYYYMMDDTHH:mm:ss'
@@ -103,7 +103,7 @@ It is perfectly valid to specify multiple types for both params and return value
 Utilizing Namespaces
 --------------------
 
- *XML-RPC* has a concept of namespacing; basically, it allows grouping *XML-RPC* methods by dot-delimited namespaces. This helps prevent naming collisions between methods served by different classes. As an example, the *XML-RPC* server is expected to server several methods in the 'system' namespace:
+*XML-RPC* has a concept of namespacing; basically, it allows grouping *XML-RPC* methods by dot-delimited namespaces. This helps prevent naming collisions between methods served by different classes. As an example, the *XML-RPC* server is expected to server several methods in the 'system' namespace:
 
     - system.listMethodssystem.methodHelpsystem.methodSignature
 
@@ -138,7 +138,7 @@ To use a custom response class, use ``Zend\XmlRpc\Server::setResponseClass()`` p
 Handling Exceptions via Faults
 ------------------------------
 
- ``Zend_XmlRpc_Server`` catches Exceptions generated by a dispatched method, and generates an *XML-RPC* fault response when such an exception is caught. By default, however, the exception messages and codes are not used in a fault response. This is an intentional decision to protect your code; many exceptions expose more information about the code or environment than a developer would necessarily intend (a prime example includes database abstraction or access layer exceptions).
+``Zend_XmlRpc_Server`` catches Exceptions generated by a dispatched method, and generates an *XML-RPC* fault response when such an exception is caught. By default, however, the exception messages and codes are not used in a fault response. This is an intentional decision to protect your code; many exceptions expose more information about the code or environment than a developer would necessarily intend (a prime example includes database abstraction or access layer exceptions).
 
 Exception classes can be whitelisted to be used as fault responses, however. To do so, simply utilize ``Zend\XmlRpc\Server\Fault::attachFaultException()`` to pass an exception class to whitelist:
 
@@ -269,7 +269,7 @@ The arguments passed at ``setClass()`` at server construction time are injected 
 Passing arguments only to constructor
 -------------------------------------
 
- ``Zend\XmlRpc\Server`` allows to restrict argument passing to constructors only. This can be used for constructor dependency injection. To limit injection to constructors, call ``sendArgumentsToAllMethods`` and passFALSEas an argument. This disables the default behavior of all arguments being injected into the remote method. In the example below the instance of ``ProductRepository`` and ``PurchaseRepository`` is only injected into the constructor of ``Services_PricingService2`` .
+``Zend\XmlRpc\Server`` allows to restrict argument passing to constructors only. This can be used for constructor dependency injection. To limit injection to constructors, call ``sendArgumentsToAllMethods`` and passFALSEas an argument. This disables the default behavior of all arguments being injected into the remote method. In the example below the instance of ``ProductRepository`` and ``PurchaseRepository`` is only injected into the constructor of ``Services_PricingService2`` .
 
 .. code-block:: php
     :linenos:
@@ -309,7 +309,7 @@ Passing arguments only to constructor
 Attaching a class instance
 --------------------------
 
- ``setClass()`` allows to register a previously instantiated object at the server. Just pass an instance instead of the class name. Obviously passing arguments to the constructor is not possible with pre-instantiated objects.
+``setClass()`` allows to register a previously instantiated object at the server. Just pass an instance instead of the class name. Obviously passing arguments to the constructor is not possible with pre-instantiated objects.
 
 Attaching several classes using namespaces
 ------------------------------------------
@@ -466,7 +466,7 @@ The example below illustrates caching server definitions between requests.
 Optimizing XML generation
 -------------------------
 
- ``Zend\XmlRpc\Server`` uses ``DOMDocument`` of *PHP* extensionext/domto generate it's *XML* output. Whileext/domis available on a lot of hosts it is not exactly the fastest. Benchmarks have shown, that ``XmlWriter`` fromext/xmlwriterperforms better.
+``Zend\XmlRpc\Server`` uses ``DOMDocument`` of *PHP* extensionext/domto generate it's *XML* output. Whileext/domis available on a lot of hosts it is not exactly the fastest. Benchmarks have shown, that ``XmlWriter`` fromext/xmlwriterperforms better.
 
 Ifext/xmlwriteris available on your host, you can select a the ``XmlWriter`` -based generator to leaverage the performance differences.
 
@@ -495,3 +495,8 @@ Ifext/xmlwriteris available on your host, you can select a the ``XmlWriter`` -ba
                     This optimization makes sense for the client side too. Just
                     select the alternate XML generator before
                     doing any work with Zend\XmlRpc\Client.
+
+
+.. _`the specifications outlined at www.xmlrpc.com`: http://www.xmlrpc.com/spec
+.. _`Zend\Controller`: 
+.. _`Remote Facade`: http://martinfowler.com/eaaCatalog/remoteFacade.html
